@@ -4,7 +4,7 @@ def branch=${parameters.branch}
 
 pipelineJob(${jobName}) {
     definition {
-            scm {
+            scm {c
                 git {
                     remote {
                         url(${url})
