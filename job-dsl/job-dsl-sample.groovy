@@ -1,8 +1,12 @@
-print("Loading config from ${pipeline}")
+@Grab('org.yaml:snakeyaml:1.17')
+import org.yaml.snakeyaml.Yaml
 
-pipelineJob('sample-job-test') {
+def pipeline=${pipelineFile}
+print("Loading config from ${pipeline}")
+def config = new Yaml().load(("${pipeline}" as File).text)
+
+pipelineJob(${config.parameters.jobName}) {
     definition {
-        def config = readYaml file: "${pipelineFile}"
             scm {
                 git {
                     remote {
