@@ -1,3 +1,6 @@
+@Grab(group='org.codehaus.groovy.modules.http-builder', module='http-builder', version='0.7.1')
+import groovy.util.ConfigSlurper
+
 pipeline {
     agent any
     stages {
@@ -17,11 +20,12 @@ pipeline {
                         checkout([$class           : 'GitSCM', branches: [[name: "main"]],
                                   userRemoteConfigs: [[url          : "git@github.com:jayjirakrit/JENKINS_DEVOPS.git",
                                                        credentialsId: "jenkins-git-key"]]])
-                        pipelineConfig = readYaml file: "${WORKSPACE}/pipeline-parameter/pipeline-parameter.yaml"
+                        def pipelineConfigPath = "${WORKSPACE}/params/pipeline-parameter/pipeline-parameter.yaml"
+                        def pipelineConfig = readYaml file: "${pipelineConfigPath}"
                         echo "${pipelineConfig}"
-                        jenkinsJobTemplate = "${WORKSPACE}/job-dsl/job-dsl.groovy"
-                        sh "cat \"${WORKSPACE}/pipeline-parameter/pipeline-parameter.yaml\" > pipeline.yaml"
-                        sh "cat \"${jenkinsJobTemplate}\" > job-dsl.groovy"
+                        def jenkinsJobTemplatePath = "${WORKSPACE}/job-dsl-templates/job-dsl/job-dsl.groovy" as java.lang.Object
+                        sh "cat \"${pipelineConfigPath}\" > pipeline.yaml"
+                        sh "cat \"${jenkinsJobTemplatePath}\" > job-dsl.groovy"
                         stash includes: 'pipeline.yaml', name: 'pipeline-params'
                         stash includes: 'job-dsl.groovy', name: 'job-dsl'
                     }
@@ -31,16 +35,18 @@ pipeline {
         stage('Apply Job Definition') {
             steps {
                 script {
+                    echo "Start apply job .."
                     unstash 'pipeline-params'
                     unstash 'job-dsl'
                     // Read Yaml file
-                    pipelineConfig = readYaml file: "${WORKSPACE}/pipeline.yaml"
+                    def pipelineConfig = readYaml file: "${WORKSPACE}/pipeline.yaml"
+                    def yamlMap = new ConfigSlurper().parse("${pipelineConfig}")
                     // Run Job Dsl
                     jobDsl targets: ['job-dsl.groovy'],
-                           removedJobAction: 'DELETE',
-                           removedViewAction: 'DELETE',
-                           lookupStrategy: 'SEED_JOB',
-                           additionalParameters: ${pipelineConfig}
+                            removedJobAction: 'DELETE',
+                            removedViewAction: 'DELETE',
+                            lookupStrategy: 'SEED_JOB',
+                            additionalParameters: "${yamlMap}"
                 }
             }
         }
