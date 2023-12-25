@@ -22,9 +22,9 @@ pipeline {
                         echo "${pipelineConfig}"
                         def jenkinsJobTemplatePath = "${WORKSPACE}/job-dsl-templates/job-dsl/job-dsl.groovy" as java.lang.Object
                         sh "cat \"${pipelineConfigPath}\" > pipeline.yaml"
-                        sh "cat \"${jenkinsJobTemplatePath}\" > job-dsl.groovy"
+                        sh "cat \"${jenkinsJobTemplatePath}\" > jobDsl.groovy"
                         stash includes: 'pipeline.yaml', name: 'pipeline-params'
-                        stash includes: 'job-dsl.groovy', name: 'job-dsl'
+                        stash includes: 'jobDsl.groovy', name: 'job-dsl'
                     }
                 }
             }
@@ -38,11 +38,13 @@ pipeline {
                     // Read Yaml file
                     def pipelineConfigPath = "${WORKSPACE}/pipeline.yaml"
                     // Run Job Dsl
-                    jobDsl targets: ['job-dsl.groovy'],
+                    def file = sh "ls"
+                    echo "${file}"
+                    jobDsl targets: './jobDsl.groovy',
                             removedJobAction: 'DELETE',
                             removedViewAction: 'DELETE',
                             lookupStrategy: 'SEED_JOB',
-                            additionalParameters: [pipelineFile:"${pipelineConfigPath}"]
+                            additionalParameters: [pipelineFile: "${pipelineConfigPath}", credentials: 'SECRET']
                 }
             }
         }
