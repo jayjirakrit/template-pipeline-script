@@ -1,6 +1,6 @@
+def filePath = ${pipelineFile}
 pipelineJob('sample-job-test') {
     definition {
-        def config = readYaml file: "${pipelineFile}"
             scm {
                 git {
                     remote {
