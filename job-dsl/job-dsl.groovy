@@ -10,6 +10,6 @@ job(jobName) {
         github("${url}", "${branch}", 'ssh')
     }
     steps {
-        shell("echo Credential ${rawPipeline}")
+        shell("echo Credential ${config}")
     }
 }

@@ -1,4 +1,4 @@
 parameters:
-  job: 'sample-1'
-  url: 'git@github.com:jayjirakrit/JENKINS_DEVOPS.git'
-  branch: 'main'
+  job: pt-service
+  url: git@github.com:jayjirakrit/JENKINS_DEVOPS.git
+  branch: main
