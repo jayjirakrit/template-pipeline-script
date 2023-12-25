@@ -4,6 +4,6 @@ job(jobName) {
         github('jenkinsci/job-dsl-plugin', 'master', 'ssh')
     }
     steps {
-        maven("test -Dproject.name=${project}/${branchName}")
+        shell("echo Create Job ${jobName}")
     }
 }
