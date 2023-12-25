@@ -1,5 +1,3 @@
-print("Loading config from ${pipeline}")
-
 pipelineJob('sample-job-test') {
     definition {
         def config = readYaml file: "${pipelineFile}"
