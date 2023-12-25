@@ -1,16 +1,15 @@
-import groovy.util.ConfigSlurper
+import groovy.yaml.YamlSlurper
 
 def jobName = "sample-job-test"
-def credential = "${credentials}"
-def pipelinePath = readFileFromWorkspace("${pipelineFile}")
-def configSlurper = new ConfigSlurper().parse(new File(${pipelineFile}).text)
+def rawPipeline = readFileFromWorkspace("${pipelineFile}")
+def config = new YamlSlurper().parseText(rawPipeline)
 
 job(jobName) {
     scm {
         github('jenkinsci/job-dsl-plugin', 'master', 'ssh')
     }
     steps {
-        shell("echo Credential ${pipelinePath}")
-        shell("echo Credential ${configSlurper.parameters.url}")
+        shell("echo Credential ${rawPipeline}")
+        shell("echo Credential ${config.parameters.url}")
     }
 }
