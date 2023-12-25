@@ -1,13 +1,11 @@
-pipelineJob('sample-job-test') {
-    definition {
-            scm {
-                git {
-                    remote {
-                        url(${config.parameters.url})
-                    }
-                    branch("*/${config.parameters.branch}")
-                }
-            }
-            lightweight()
+def jobName = "sample-job-test"
+def project = "${credentials}"
+def branchName = "${credentials}"
+job(jobName) {
+    scm {
+        git("git://github.com/${project}.git", ${branchName})
+    }
+    steps {
+        maven("test -Dproject.name=${project}/${branchName}")
     }
 }
