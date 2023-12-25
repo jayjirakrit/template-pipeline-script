@@ -8,15 +8,15 @@ pipeline {
                     // clone pipeline-parameter.yaml file
                     dir('params') {
                         checkout([$class           : 'GitSCM', branches: [[name: "main"]],
-                                  userRemoteConfigs: [[url          : "https://github.com/jayjirakrit/JENKINS_DEVOPS.git",
-                                                       credentialsId: "gihub-key"]]])
+                                  userRemoteConfigs: [[ssh          : "git@github.com:jayjirakrit/JENKINS_DEVOPS.git",
+                                                       credentialsId: "jenkins-git-key"]]])
                     }
 
                     // clone job-dsl-template file
                     dir('job-dsl-templates') {
                         checkout([$class           : 'GitSCM', branches: [[name: "main"]],
-                                  userRemoteConfigs: [[url          : "https://github.com/jayjirakrit/JENKINS_DEVOPS.git",
-                                                       credentialsId: "gihub-key"]]])
+                                  userRemoteConfigs: [[ssh          : "git@github.com:jayjirakrit/JENKINS_DEVOPS.git",
+                                                       credentialsId: "jenkins-git-key"]]])
                         pipelineConfig = readYaml file: "${WORKSPACE}/pipeline-parameter/pipeline-parameter.yaml"
                         echo "${pipelineConfig}"
                         jenkinsJobTemplate = "${WORKSPACE}/job-dsl/job-dsl.groovy"
