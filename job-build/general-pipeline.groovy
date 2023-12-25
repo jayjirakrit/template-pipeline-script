@@ -1,6 +1,3 @@
-@Grab(group='org.codehaus.groovy.modules.http-builder', module='http-builder', version='0.7.1')
-import groovy.util.ConfigSlurper
-
 pipeline {
     agent any
     stages {
@@ -40,13 +37,12 @@ pipeline {
                     unstash 'job-dsl'
                     // Read Yaml file
                     def pipelineConfig = readYaml file: "${WORKSPACE}/pipeline.yaml"
-                    def yamlMap = new ConfigSlurper().parse("${pipelineConfig}")
                     // Run Job Dsl
                     jobDsl targets: ['job-dsl.groovy'],
                             removedJobAction: 'DELETE',
                             removedViewAction: 'DELETE',
                             lookupStrategy: 'SEED_JOB',
-                            additionalParameters: "${yamlMap}"
+                            additionalParameters: "${pipelineConfig}"
                 }
             }
         }

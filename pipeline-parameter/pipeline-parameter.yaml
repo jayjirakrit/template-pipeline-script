@@ -1,4 +1,4 @@
 parameters:
   job: sample-1
-  url: https://github.com/jayjirakrit/JENKINS_DEVOPS_TEST.git
+  url: "https://github.com/jayjirakrit/JENKINS_DEVOPS_TEST.git"
   branch: main
