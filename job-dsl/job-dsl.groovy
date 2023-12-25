@@ -1,4 +1,3 @@
-def filePath = ${pipelineFile}
 pipelineJob('sample-job-test') {
     definition {
             scm {
