@@ -7,16 +7,16 @@ pipeline {
                     cleanWs()
                     // clone pipeline-parameter.yaml file
                     dir('params') {
-                        checkout([$class           : 'GitSCM', branches: [[name: "main"]],
-                                  userRemoteConfigs: [[url          : "git@github.com:jayjirakrit/JENKINS_DEVOPS.git",
-                                                       credentialsId: "jenkins-git-key"]]])
+                        checkout([$class: 'GitSCM', branches: [[name: "main"]],
+                                  userRemoteConfigs: [[url: "git@github.com:jayjirakrit/JENKINS_DEVOPS.git",
+                                  credentialsId: "jenkins-git-key"]]])
                     }
 
                     // clone job-dsl-template file
                     dir('job-dsl-templates') {
-                        checkout([$class           : 'GitSCM', branches: [[name: "main"]],
-                                  userRemoteConfigs: [[url          : "git@github.com:jayjirakrit/JENKINS_DEVOPS.git",
-                                                       credentialsId: "jenkins-git-key"]]])
+                        checkout([$class: 'GitSCM', branches: [[name: "main"]],
+                                  userRemoteConfigs: [[url: "git@github.com:jayjirakrit/JENKINS_DEVOPS.git",
+                                  credentialsId: "jenkins-git-key"]]])
                         def pipelineConfigPath = "${WORKSPACE}/params/pipeline-parameter/pipeline-parameter.yaml"
                         def pipelineConfig = readYaml file: "${pipelineConfigPath}"
                         echo "${pipelineConfig}"
