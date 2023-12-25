@@ -1,15 +1,15 @@
 @Grab('org.yaml:snakeyaml:1.17')
 import org.yaml.snakeyaml.Yaml
 
-def jobName = "sample-job-test"
-def rawPipeline = readFileFromWorkspace("${pipelineFile}")
 def config = new Yaml().load(("${pipelineFile}" as File).text)
+def jobName = "${config.parameters.job}"
+def url = "${config.parameters.url}"
+def branch = "${config.parameters.branch}"
 job(jobName) {
     scm {
-        github('jenkinsci/job-dsl-plugin', 'master', 'ssh')
+        github("${url}", "${branch}", 'ssh')
     }
     steps {
         shell("echo Credential ${rawPipeline}")
-        shell("echo Credential ${config.parameters.url}")
     }
 }
