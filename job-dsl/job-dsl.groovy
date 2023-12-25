@@ -6,7 +6,7 @@ job(jobName) {
         github('jenkinsci/job-dsl-plugin', 'master', 'ssh')
     }
     steps {
-        shell("echo Create Job ${pipelinePath.url}")
+        shell("echo Create Job ${pipelinePath.parameters.url}")
         shell("echo Credential ${credential}")
     }
 }
