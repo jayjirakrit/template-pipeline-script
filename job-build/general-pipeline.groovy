@@ -38,8 +38,7 @@ pipeline {
                     // Read Yaml file
                     def pipelineConfigPath = "${WORKSPACE}/pipeline.yaml"
                     // Run Job Dsl
-                    def file = sh "ls"
-                    echo "${file}"
+                    sh "ls"
                     jobDsl targets: './jobDsl.groovy',
                             removedJobAction: 'DELETE',
                             removedViewAction: 'DELETE',
