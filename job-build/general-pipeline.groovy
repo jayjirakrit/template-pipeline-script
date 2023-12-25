@@ -36,14 +36,13 @@ pipeline {
                     unstash 'pipeline-params'
                     unstash 'job-dsl'
                     // Read Yaml file
-                    def rawFile = readFile file: "${WORKSPACE}/pipeline.yaml"
-                    def pipelineConfig = readYaml file: "${rawFile}"
+                    def pipelineConfigPath = "${WORKSPACE}/pipeline.yaml"
                     // Run Job Dsl
                     jobDsl targets: ['job-dsl.groovy'],
                             removedJobAction: 'DELETE',
                             removedViewAction: 'DELETE',
                             lookupStrategy: 'SEED_JOB',
-                            additionalParameters: "${pipelineConfig}"
+                            additionalParameters: [pipelineFile:"${pipelineConfigPath}"]
                 }
             }
         }

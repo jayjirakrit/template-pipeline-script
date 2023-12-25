@@ -1,15 +1,19 @@
-def jobName=${parameters.job}
-def url=${parameters.url}
-def branch=${parameters.branch}
+#!/usr/bin/groovy
+@Grab('org.yaml:snakeyaml:1.17')
+import org.yaml.snakeyaml.Yaml
 
-pipelineJob(${jobName}) {
+def pipelineFile=${pipelineFile}
+print("Loading config from ${pipelineFile}")
+def config = new Yaml().load(("${pipelineFile}" as File).text)
+
+pipelineJob(${config.parameters.jobName}) {
     definition {
-            scm {c
+            scm {
                 git {
                     remote {
-                        url(${url})
+                        url(${config.parameters.url})
                     }
-                    branch("*/${branch}")
+                    branch("*/${config.parameters.branch}")
                 }
             }
             lightweight()
