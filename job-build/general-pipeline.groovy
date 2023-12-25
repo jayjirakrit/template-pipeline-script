@@ -36,7 +36,8 @@ pipeline {
                     unstash 'pipeline-params'
                     unstash 'job-dsl'
                     // Read Yaml file
-                    def pipelineConfig = readYaml file: "${WORKSPACE}/pipeline.yaml"
+                    def rawFile = readFile file: "${WORKSPACE}/pipeline.yaml"
+                    def pipelineConfig = readYaml file: "${rawFile}"
                     // Run Job Dsl
                     jobDsl targets: ['job-dsl.groovy'],
                             removedJobAction: 'DELETE',

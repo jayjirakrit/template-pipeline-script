@@ -4,7 +4,6 @@ def branch=${parameters.branch}
 
 pipelineJob(${jobName}) {
     definition {
-        cpsScm {
             scm {
                 git {
                     remote {
@@ -14,6 +13,5 @@ pipelineJob(${jobName}) {
                 }
             }
             lightweight()
-        }
     }
 }
