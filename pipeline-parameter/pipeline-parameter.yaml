@@ -1,4 +1,6 @@
 parameters:
-  job: pt-service
   url: git@github.com:jayjirakrit/JENKINS_DEVOPS.git
   branch: main
+  build:
+    jobName: pt-service-build
+    scriptPath: job-dsl/job-dsl.groovy

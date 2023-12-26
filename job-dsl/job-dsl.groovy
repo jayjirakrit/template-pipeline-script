@@ -2,7 +2,7 @@
 import org.yaml.snakeyaml.Yaml
 
 def config = new Yaml().load(("${pipelineFile}" as File).text)
-def jobName = "${config.parameters.job}"
+def jobName = "${config..build.jobName}"
 def url = "${config.parameters.url}"
 def branch = "${config.parameters.branch}"
 job(jobName) {
