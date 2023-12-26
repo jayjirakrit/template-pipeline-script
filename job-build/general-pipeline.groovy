@@ -5,7 +5,7 @@ pipeline {
             steps {
                 script {
                     cleanWs()
-                    // clone pipeline-parameter.yaml file
+                    // clone template-parameter.yaml file
                     dir('params') {
                         checkout([$class: 'GitSCM', branches: [[name: "main"]],
                                   userRemoteConfigs: [[url: "git@github.com:jayjirakrit/JENKINS_DEVOPS.git",
@@ -17,13 +17,13 @@ pipeline {
                         checkout([$class: 'GitSCM', branches: [[name: "main"]],
                                   userRemoteConfigs: [[url: "git@github.com:jayjirakrit/JENKINS_DEVOPS.git",
                                   credentialsId: "jenkins-git-key"]]])
-                        def pipelineConfigPath = "${WORKSPACE}/params/pipeline-parameter/pipeline-parameter.yaml"
+                        def pipelineConfigPath = "${WORKSPACE}/params/template-parameter/template-parameter.yaml"
                         def pipelineConfig = readYaml file: "${pipelineConfigPath}"
                         echo "${pipelineConfig}"
                         def jenkinsJobTemplatePath = "${WORKSPACE}/job-dsl-templates/job-dsl/job-dsl.groovy" as java.lang.Object
-                        sh "cat \"${pipelineConfigPath}\" > pipeline.yaml"
+                        sh "cat \"${pipelineConfigPath}\" > template.yaml"
                         sh "cat \"${jenkinsJobTemplatePath}\" > jobDsl.groovy"
-                        stash includes: 'pipeline.yaml', name: 'pipeline-params'
+                        stash includes: 'template.yaml', name: 'template-params'
                         stash includes: 'jobDsl.groovy', name: 'job-dsl'
                     }
                 }
@@ -33,10 +33,10 @@ pipeline {
             steps {
                 script {
                     echo "Start apply job .."
-                    unstash 'pipeline-params'
+                    unstash 'template-params'
                     unstash 'job-dsl'
                     // Read Yaml file
-                    def pipelineConfigPath = "${WORKSPACE}/pipeline.yaml"
+                    def pipelineConfigPath = "${WORKSPACE}/template.yaml"
                     // Run Job Dsl
                     sh "ls"
                     jobDsl targets: './jobDsl.groovy',
