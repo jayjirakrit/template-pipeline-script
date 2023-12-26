@@ -15,9 +15,9 @@ pipeline {
                     // clone job-dsl-template file
                     dir('job-dsl-templates') {
                         checkout([$class: 'GitSCM', branches: [[name: "main"]],
-                                  userRemoteConfigs: [[url: "git@github.com:jayjirakrit/JENKINS_DEVOPS.git",
+                                  userRemoteConfigs: [[url: "${pipeline_parameter_file_git}",
                                   credentialsId: "jenkins-git-key"]]])
-                        def pipelineConfigPath = "${WORKSPACE}/parms/${pipeline_parameter_file_path}"
+                        def pipelineConfigPath = "${WORKSPACE}/params/${pipeline_parameter_file_path}"
                         def pipelineConfig = readYaml file: "${pipelineConfigPath}"
                         echo "${pipelineConfig}"
                         def jenkinsJobTemplatePath = "${WORKSPACE}/job-dsl-templates/${pipelineConfig.parameters.build.scriptPath}" as java.lang.Object
