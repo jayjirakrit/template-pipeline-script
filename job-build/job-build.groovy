@@ -9,7 +9,7 @@ pipeline {
                     dir('params') {
                         checkout([$class: 'GitSCM', branches: [[name: "main"]],
                                   userRemoteConfigs: [[url: "${pipeline_parameter_file_git}",
-                                  credentialsId: 4]]])
+                                  credentialsId: "4"]]])
                     }
 
                     // clone job-dsl-template file
