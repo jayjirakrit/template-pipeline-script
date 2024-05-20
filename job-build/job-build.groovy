@@ -9,14 +9,14 @@ pipeline {
                     dir('params') {
                         checkout([$class: 'GitSCM', branches: [[name: "main"]],
                                   userRemoteConfigs: [[url: "${pipeline_parameter_file_git}",
-                                  credentialsId: "4"]]])
+                                  credentialsId: "jenkins-user"]]])
                     }
 
                     // clone job-dsl-template file
                     dir('job-dsl-templates') {
                         checkout([$class: 'GitSCM', branches: [[name: "main"]],
                                   userRemoteConfigs: [[url: "${pipeline_parameter_file_git}",
-                                  credentialsId: "4"]]])
+                                  credentialsId: "jenkins-user"]]])
                         def pipelineConfigPath = "${WORKSPACE}/params/${pipeline_parameter_file_path}"
                         def pipelineConfig = readYaml file: "${pipelineConfigPath}"
                         echo "${pipelineConfig}"
