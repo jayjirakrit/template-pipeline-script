@@ -16,7 +16,7 @@ pipeline {
                     dir('job-dsl-templates') {
                         checkout([$class: 'GitSCM', branches: [[name: "main"]],
                                   userRemoteConfigs: [[url: "${pipeline_parameter_file_git}",
-                                  credentialsId: "jenkins-git-key"]]])
+                                  credentialsId: "4"]]])
                         def pipelineConfigPath = "${WORKSPACE}/params/${pipeline_parameter_file_path}"
                         def pipelineConfig = readYaml file: "${pipelineConfigPath}"
                         echo "${pipelineConfig}"
