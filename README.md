@@ -1,6 +1,7 @@
 # Jenkins Pipeline Job Creation System
 
 ## Architecture Overview
+This repository contains a modular Jenkins pipeline framework that enables dynamic job creation and execution through a template-based approach. The system separates configuration, job definition, and execution logic to provide flexible and reusable CI/CD pipelines. Utilizing concept Infrastructure as a Code (IaaC) focusing on streamline IT operation process, standardize, and automation.
 
 ### 1. Pipeline Script Template
 **File:** `job-builder.groovy`
@@ -49,6 +50,7 @@
 ```groovy
 // Read YAML File as Object
 def configVal = readYaml file: "full path of the yml file"
+```
 
 ## Reference
 - https://github.com/jenkinsci/job-dsl-plugin/wiki/User-Power-Moves
