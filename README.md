@@ -50,7 +50,7 @@ This repository contains a modular Jenkins pipeline framework that enables dynam
 ### 4. Pipeline Execution Template Sample
 **File:** `template.groovy`
 
-- **Function:** Example of execution stages and steps for reference create JobDsl script
+- **Function:** Actual execution stages and steps using by created job from job-dsl script. This file will be supplied as Jenkins as a Code script. 
 - **Stages:**
   - Prepare environment
   - Build artifact
