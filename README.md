@@ -47,10 +47,10 @@ This repository contains a modular Jenkins pipeline framework that enables dynam
   - OCP (OpenShift) configurations
   - Other job-specific parameters
 
-### 4. Pipeline Execution Template
+### 4. Pipeline Execution Template Sample
 **File:** `template.groovy`
 
-- **Function:** Defines actual execution stages and steps
+- **Function:** Example of execution stages and steps for reference create JobDsl script
 - **Stages:**
   - Prepare environment
   - Build artifact
